@@ -63,6 +63,11 @@ class TestLoginAPI:
             resp_json = response.json()
             assert "message" in resp_json
             assert "用户名或密码错误" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="登录失败响应",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("失败登录")
     @allure.title("测试不存在的用户登录")
@@ -80,6 +85,11 @@ class TestLoginAPI:
             resp_json = response.json()
             assert "message" in resp_json
             assert "用户名或密码错误" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="登录失败响应",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("参数验证")
     @allure.title("测试空用户名登录")
@@ -94,6 +104,11 @@ class TestLoginAPI:
             resp_json = response.json()
             assert "message" in resp_json
             assert "用户名和密码不能为空" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="参数验证响应",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("参数验证")
     @allure.title("测试空密码登录")
@@ -108,6 +123,11 @@ class TestLoginAPI:
             resp_json = response.json()
             assert "message" in resp_json
             assert "用户名和密码不能为空" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="参数验证响应",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("异常情况测试")
     @allure.title("测试非JSON请求体登录")
@@ -127,6 +147,11 @@ class TestLoginAPI:
                 assert "请求体必须为JSON格式" in resp_json["message"]
             else:
                 assert "服务器内部错误" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="异常响应",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("性能测试")
     @allure.title("测试连续多次登录")
@@ -151,3 +176,8 @@ class TestLoginAPI:
             assert response.status_code == 200
             resp_json = response.json()
             assert "token" in resp_json
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="登录响应",
+                attachment_type=allure.attachment_type.JSON
+            )
