@@ -14,7 +14,7 @@ class TestDoorAPI:
         with allure.step("准备请求头"):
             headers = {"Authorization": f"Bearer {auth_token}"}
             allure.attach(
-                json.dumps(headers, indent=2),
+                json.dumps(headers, indent=2, ensure_ascii=False),
                 name="请求头",
                 attachment_type=allure.attachment_type.JSON
             )
@@ -30,7 +30,7 @@ class TestDoorAPI:
             resp_json = response.json()
             assert "开门成功" in resp_json["message"]
             allure.attach(
-                json.dumps(resp_json, indent=2),
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
                 name="响应数据",
                 attachment_type=allure.attachment_type.JSON
             )
@@ -61,7 +61,7 @@ class TestDoorAPI:
             resp_json = response.json()
             assert "用户未认证" in resp_json["message"]
             allure.attach(
-                json.dumps(resp_json, indent=2),
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
                 name="响应数据",
                 attachment_type=allure.attachment_type.JSON
             )
@@ -111,7 +111,7 @@ class TestDoorAPI:
             resp_json = response.json()
             assert expected_msg in resp_json["message"]
             allure.attach(
-                f"请求参数: {param}\n响应: {json.dumps(resp_json)}",
+                f"请求参数: {param}\n响应: {json.dumps(resp_json, ensure_ascii=False)}",
                 name="请求-响应详情",
                 attachment_type=allure.attachment_type.TEXT
             )
