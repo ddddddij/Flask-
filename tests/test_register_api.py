@@ -29,7 +29,7 @@ class TestRegisterAPI:
             assert "message" in resp_json
             assert "成功" in resp_json["message"]
             allure.attach(
-                json.dumps(resp_json, indent=2),
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
                 name="响应数据",
                 attachment_type=allure.attachment_type.JSON
             )
@@ -52,6 +52,11 @@ class TestRegisterAPI:
             resp_json = response.json()
             assert "message" in resp_json
             assert "已存在" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="响应数据",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("注册参数验证")
     @allure.title("测试无效用户名注册")
@@ -73,6 +78,11 @@ class TestRegisterAPI:
                 assert response.status_code == 400
                 resp_json = response.json()
                 assert expected_msg in resp_json["message"]
+                allure.attach(
+                    json.dumps(resp_json, indent=2, ensure_ascii=False),
+                    name="参数验证响应",
+                    attachment_type=allure.attachment_type.JSON
+                )
             else:
                 assert response.status_code in [200, 409]
 
@@ -100,6 +110,11 @@ class TestRegisterAPI:
                 assert response.status_code == 400
                 resp_json = response.json()
                 assert expected_msg in resp_json["message"]
+                allure.attach(
+                    json.dumps(resp_json, indent=2, ensure_ascii=False),
+                    name="参数验证响应",
+                    attachment_type=allure.attachment_type.JSON
+                )
             else:
                 assert response.status_code in [200, 409]
 
@@ -114,6 +129,11 @@ class TestRegisterAPI:
             assert response.status_code == 400
             resp_json = response.json()
             assert "请求体必须为JSON格式" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="异常响应",
+                attachment_type=allure.attachment_type.JSON
+            )
 
     @allure.story("异常情况测试")
     @allure.title("测试非JSON请求体注册")
@@ -134,3 +154,8 @@ class TestRegisterAPI:
                 assert "请求体必须为JSON格式" in resp_json["message"]
             else:
                 assert "服务器内部错误" in resp_json["message"]
+            allure.attach(
+                json.dumps(resp_json, indent=2, ensure_ascii=False),
+                name="异常响应",
+                attachment_type=allure.attachment_type.JSON
+            )
